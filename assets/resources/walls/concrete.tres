@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="WallData" load_steps=2 format=3 uid="uid://d1d5blmlvn5oc"]
+
+[ext_resource type="Script" path="res://scr/customResources/wall_resource.gd" id="1_y2j6i"]
+
+[resource]
+script = ExtResource("1_y2j6i")
+name = "Concrete"
+category = ""
+type_int = 0
+health = 10

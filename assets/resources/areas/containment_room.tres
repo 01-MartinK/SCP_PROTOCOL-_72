@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AreaData" load_steps=2 format=3 uid="uid://de3ogjk2ibgyu"]
+
+[ext_resource type="Script" path="res://scr/customResources/area_resource.gd" id="1_e4g2x"]
+
+[resource]
+script = ExtResource("1_e4g2x")
+name = "Containment Room"
+description = ""
+area_type_name = "Containment"
+furniture_requirements = Array[Resource("res://scr/customResources/furniture_resource.gd")]([])
+area_color = Color(1, 0.294118, 0.333333, 1)

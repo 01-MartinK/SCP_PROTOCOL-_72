@@ -1,0 +1,71 @@
+[gd_scene load_steps=17 format=3 uid="uid://cb2ybt04x38ww"]
+
+[ext_resource type="Texture2D" uid="uid://bet6q7ptsjica" path="res://assets/textures/walls/concrete.png" id="1_2uvit"]
+[ext_resource type="Texture2D" uid="uid://v3xi53g6alve" path="res://assets/textures/walls/brick.png" id="2_s6uqa"]
+[ext_resource type="Texture2D" uid="uid://jjj5h0yi6r00" path="res://assets/textures/walls/concrete_strong_albedo.png" id="3_ry6ci"]
+[ext_resource type="Texture2D" uid="uid://do7lw3xtq8eeh" path="res://assets/textures/walls/steel.png" id="4_y0qr8"]
+[ext_resource type="Texture2D" uid="uid://dywlf7n0bkmfg" path="res://assets/textures/walls/steel_casing_albedo.png" id="5_c663s"]
+[ext_resource type="Texture2D" uid="uid://cjtr1o2xj3yqw" path="res://assets/textures/walls/steel_casing_normal.png" id="6_xoun4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wrkab"]
+albedo_texture = ExtResource("1_2uvit")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_2jeku"]
+material = SubResource("StandardMaterial3D_wrkab")
+size = Vector3(0.5, 1, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kxrs5"]
+albedo_texture = ExtResource("2_s6uqa")
+uv1_scale = Vector3(1.5, 1.5, 1.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nrvwh"]
+material = SubResource("StandardMaterial3D_kxrs5")
+size = Vector3(0.5, 1, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gthar"]
+albedo_texture = ExtResource("3_ry6ci")
+uv1_scale = Vector3(2, 2, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kkd74"]
+material = SubResource("StandardMaterial3D_gthar")
+size = Vector3(0.5, 1, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4khl7"]
+albedo_texture = ExtResource("4_y0qr8")
+uv1_scale = Vector3(1, 1.5, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ymys2"]
+material = SubResource("StandardMaterial3D_4khl7")
+size = Vector3(0.5, 1, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4xqwc"]
+albedo_texture = ExtResource("5_c663s")
+normal_enabled = true
+normal_texture = ExtResource("6_xoun4")
+uv1_scale = Vector3(2, 2.667, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fbhl1"]
+material = SubResource("StandardMaterial3D_4xqwc")
+size = Vector3(0.5, 1, 0.5)
+
+[node name="grid_map" type="Node3D"]
+
+[node name="concrete" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_2jeku")
+
+[node name="brick" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("BoxMesh_nrvwh")
+
+[node name="contensedBrick" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1)
+mesh = SubResource("BoxMesh_kkd74")
+
+[node name="steel" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+mesh = SubResource("BoxMesh_ymys2")
+
+[node name="steelCasing" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
+mesh = SubResource("BoxMesh_fbhl1")

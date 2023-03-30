@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AreaData" load_steps=5 format=3 uid="uid://ce0l6gtjjw4qf"]
+
+[ext_resource type="Resource" uid="uid://cc1vqp4qe00dd" path="res://assets/resources/furniture/crappy_bed.tres" id="1_gwrh6"]
+[ext_resource type="Script" path="res://scr/customResources/area_resource.gd" id="1_iel11"]
+[ext_resource type="Resource" uid="uid://cpaqdw7iiooo8" path="res://assets/resources/furniture/sink_old.tres" id="2_0pg22"]
+[ext_resource type="Resource" uid="uid://ci7hhjxadcxo5" path="res://assets/resources/furniture/toilet.tres" id="3_0mpdt"]
+
+[resource]
+script = ExtResource("1_iel11")
+name = "D-Class cell"
+description = ""
+area_type_name = "Containment"
+furniture_requirements = Array[Resource("res://scr/customResources/furniture_resource.gd")]([ExtResource("1_gwrh6"), ExtResource("2_0pg22"), ExtResource("3_0mpdt")])
+area_color = Color(1, 0.960784, 0.521569, 1)

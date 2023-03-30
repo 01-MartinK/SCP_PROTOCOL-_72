@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://gfobuf6txns8"]
+
+[ext_resource type="Script" path="res://scr/area.gd" id="1_0tnlb"]
+[ext_resource type="Texture2D" uid="uid://c2gvswqchlifc" path="res://assets/textures/grid_texture.png" id="2_3dqyc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hrhdh"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.27451)
+albedo_texture = ExtResource("2_3dqyc")
+uv1_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_1hmyl"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_hrhdh")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_21xgs"]
+resource_local_to_scene = true
+
+[node name="area" type="Area3D"]
+collision_layer = 32
+collision_mask = 32
+script = ExtResource("1_0tnlb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0633333, 0)
+mesh = SubResource("PlaneMesh_1hmyl")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(0.965926, -0.258819, -1.13133e-08, 0.0531353, 0.198304, 0.978699, -0.253306, -0.945351, 0.205299, 0, 0.152893, 0)
+pixel_size = 0.01
+text = "test"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_21xgs")

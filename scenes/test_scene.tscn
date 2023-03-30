@@ -1,0 +1,89 @@
+[gd_scene load_steps=12 format=3 uid="uid://cu2f1bg81el0a"]
+
+[ext_resource type="PackedScene" uid="uid://bhf2n8i22tgji" path="res://objects/builder.tscn" id="1_1mpfp"]
+[ext_resource type="MeshLibrary" uid="uid://d3d1pte0naw1d" path="res://assets/walls.tres" id="1_qxwjn"]
+[ext_resource type="MeshLibrary" uid="uid://b1jk11vmy5x1" path="res://assets/floors.tres" id="2_blgve"]
+[ext_resource type="PackedScene" uid="uid://irulm8it6rk4" path="res://objects/worker.tscn" id="4_gofx5"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_dqsrx"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_s8tit"]
+sky_material = SubResource("ProceduralSkyMaterial_dqsrx")
+
+[sub_resource type="Environment" id="Environment_kbvow"]
+background_mode = 2
+sky = SubResource("Sky_s8tit")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_ak50e"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_j4ae3"]
+vertices = PackedVector3Array(-7.75, 0.16895, -15.5, -15.5, 0.16895, -15.5, -15.5, 0.16895, -6.25, -15.5, 0.16895, 3, -1.75, 0.16895, 3, -1.5, 0.16895, 2.25, -15.5, 0.16895, -6.25, -15.5, 0.16895, -6.25, -1.5, 0.16895, 2.25, 0, 0.16895, 2.25, 0, 0.16895, -15.5, -7.75, 0.16895, -15.5, 15.5, 0.16895, -6.25, 15.5, 0.16895, -15.5, 7.75, 0.16895, -15.5, 1.5, 0.16895, 2.25, 1.75, 0.16895, 3, 15.5, 0.16895, 3, 15.5, 0.16895, -6.25, 0, 0.16895, 2.25, 1.5, 0.16895, 2.25, 15.5, 0.16895, -6.25, 7.75, 0.16895, -15.5, 0, 0.16895, -15.5, -15.5, 0.16895, 9.25, -15.5, 0.16895, 15.5, -7.75, 0.16895, 15.5, 0, 0.16895, 15.5, 0, 0.16895, 3.75, -1.5, 0.16895, 3.75, 0, 0.16895, 15.5, -1.5, 0.16895, 3.75, -1.75, 0.16895, 3, -15.5, 0.16895, 3, -15.5, 0.16895, 9.25, -7.75, 0.16895, 15.5, 7.75, 0.16895, 15.5, 15.5, 0.16895, 15.5, 15.5, 0.16895, 9.25, 1.5, 0.16895, 3.75, 0, 0.16895, 3.75, 0, 0.16895, 15.5, 1.75, 0.16895, 3, 1.5, 0.16895, 3.75, 0, 0.16895, 15.5, 7.75, 0.16895, 15.5, 15.5, 0.16895, 9.25, 15.5, 0.16895, 3)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(4, 3, 5), PackedInt32Array(5, 3, 6), PackedInt32Array(8, 7, 9), PackedInt32Array(9, 7, 11), PackedInt32Array(9, 11, 10), PackedInt32Array(14, 13, 12), PackedInt32Array(16, 15, 17), PackedInt32Array(17, 15, 18), PackedInt32Array(20, 19, 21), PackedInt32Array(21, 19, 22), PackedInt32Array(22, 19, 23), PackedInt32Array(26, 25, 24), PackedInt32Array(29, 28, 27), PackedInt32Array(31, 30, 32), PackedInt32Array(32, 30, 35), PackedInt32Array(32, 35, 34), PackedInt32Array(32, 34, 33), PackedInt32Array(38, 37, 36), PackedInt32Array(41, 40, 39), PackedInt32Array(43, 42, 44), PackedInt32Array(44, 42, 45), PackedInt32Array(45, 42, 46), PackedInt32Array(46, 42, 47)]
+cell_height = 0.1
+agent_height = 0.5
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_xv83t"]
+size = Vector2(32, 32)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lectd"]
+size = Vector3(32, 1, 32)
+
+[node name="testScene" type="Node3D"]
+
+[node name="GridMap" type="GridMap" parent="."]
+mesh_library = ExtResource("1_qxwjn")
+cell_size = Vector3(0.5, 1, 0.5)
+data = {
+"cells": PackedInt32Array(1, 1, 0, 3, 1, 0, 5, 1, 0, 7, 1, 0, 8, 1, 0, 9, 1, 0)
+}
+
+[node name="floor_gridMap" type="GridMap" parent="."]
+mesh_library = ExtResource("2_blgve")
+cell_size = Vector3(0.5, 1, 0.5)
+data = {
+"cells": PackedInt32Array(1, 1, 0, 6, 5, 0, 5, 5, 0, 5, 4, 0, 6, 4, 0)
+}
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_kbvow")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="builder" parent="." instance=ExtResource("1_1mpfp")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4641, 0.350771, -1.34948)
+mesh = SubResource("BoxMesh_ak50e")
+
+[node name="entitys" type="Node" parent="."]
+
+[node name="worker" parent="entitys" instance=ExtResource("4_gofx5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.197933, 0.914533)
+
+[node name="props" type="Node" parent="."]
+
+[node name="areas" type="Node" parent="."]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_j4ae3")
+
+[node name="main_floor" type="StaticBody3D" parent="NavigationRegion3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/main_floor"]
+mesh = SubResource("PlaneMesh_xv83t")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/main_floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_lectd")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.457749, 3)
+use_collision = true
+size = Vector3(2.21992, 1.7776, 0.484572)

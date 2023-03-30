@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://irulm8it6rk4"]
+
+[ext_resource type="PackedScene" uid="uid://dmy52qsjft7hv" path="res://assets/models/personel/scientist.glb" id="1_7ih0e"]
+[ext_resource type="Script" path="res://scr/AI/worker.gd" id="1_t602o"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_paelm"]
+height = 0.676705
+radius = 0.21951
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wxyt3"]
+shading_mode = 0
+
+[sub_resource type="TorusMesh" id="TorusMesh_flu5t"]
+material = SubResource("StandardMaterial3D_wxyt3")
+inner_radius = 0.35
+outer_radius = 0.4
+
+[node name="worker" type="CharacterBody3D"]
+collision_layer = 65
+collision_mask = 65
+script = ExtResource("1_t602o")
+
+[node name="body" parent="." instance=ExtResource("1_7ih0e")]
+transform = Transform3D(0.65, 0, 0, 0, 0.65, 0, 0, 0, 0.65, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00205147, 0.172587, 0.0205149)
+shape = SubResource("CylinderShape3D_paelm")
+
+[node name="selector_mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.106418, 0)
+visible = false
+mesh = SubResource("TorusMesh_flu5t")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="rays" type="Node3D" parent="."]
+
+[node name="left_ray" type="RayCast3D" parent="rays"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0, 0.2)
+target_position = Vector3(0.15, 0, 0.15)
+
+[node name="forward_ray" type="RayCast3D" parent="rays"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.275)
+target_position = Vector3(0, 0, 0.25)
+
+[node name="right_ray" type="RayCast3D" parent="rays"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0, 0.2)
+target_position = Vector3(-0.15, 0, 0.15)
+
+[editable path="body"]

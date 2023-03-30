@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://bxa2hjuq0siju"]
+
+[ext_resource type="Texture2D" uid="uid://b4a55mdo373c8" path="res://assets/textures/floors/concrete.png" id="1_j606v"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u7v5y"]
+albedo_texture = ExtResource("1_j606v")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_4tsra"]
+material = SubResource("StandardMaterial3D_u7v5y")
+size = Vector2(0.5, 0.5)
+center_offset = Vector3(0, -0.49, 0)
+
+[node name="floors" type="Node3D"]
+
+[node name="concrete_floor" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_4tsra")

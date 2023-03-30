@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="WallData" load_steps=2 format=3 uid="uid://ci1fjgadtqpmk"]
+
+[ext_resource type="Script" path="res://scr/customResources/wall_resource.gd" id="1_orsal"]
+
+[resource]
+script = ExtResource("1_orsal")
+name = "Contensed Concrete"
+type_int = 2
+health = 10

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AreaData" load_steps=2 format=3 uid="uid://ccwegrhgnqf62"]
+
+[ext_resource type="Script" path="res://scr/customResources/area_resource.gd" id="1_tqpei"]
+
+[resource]
+script = ExtResource("1_tqpei")
+name = "Containment Cell"
+area_type_name = "Containment"
+furniture_requirements = Array[Resource("res://scr/customResources/furniture_resource.gd")]([])
+area_color = Color(1, 1, 1, 1)

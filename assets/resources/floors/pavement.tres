@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="FloorData" load_steps=2 format=3 uid="uid://b5x1rienlgb5"]
+
+[ext_resource type="Script" path="res://scr/customResources/floor_resource.gd" id="1_52tmv"]
+
+[resource]
+script = ExtResource("1_52tmv")
+name = "Pavement"
+type_int = 0
+prettynes = 0

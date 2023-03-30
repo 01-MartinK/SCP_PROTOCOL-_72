@@ -1,0 +1,81 @@
+[gd_scene load_steps=2 format=3 uid="uid://dlaojj1yne6vf"]
+
+[ext_resource type="Script" path="res://scr/UI/area_popup.gd" id="1_kw33m"]
+
+[node name="area_popup" type="Popup"]
+size = Vector2i(320, 320)
+visible = true
+script = ExtResource("1_kw33m")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="area_name" type="Label" parent="Control/Panel/VBoxContainer"]
+layout_mode = 2
+text = "D-Class Cell"
+
+[node name="description" type="Label" parent="Control/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.686275, 0.686275, 0.686275, 1)
+theme_override_font_sizes/font_size = 12
+text = "For holding D-class specimen"
+
+[node name="requirements_lbl" type="Label" parent="Control/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Requirements"
+
+[node name="requirements" type="VBoxContainer" parent="Control/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Control/Panel/VBoxContainer/requirements"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0.0235294, 1)
+text = "- Bed"
+
+[node name="Label2" type="Label" parent="Control/Panel/VBoxContainer/requirements"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0.0235294, 1)
+text = "- Toilet"
+
+[node name="Label3" type="Label" parent="Control/Panel/VBoxContainer/requirements"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0.0235294, 1)
+text = "- Sink"
+
+[node name="button_group" type="HBoxContainer" parent="Control/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="destroy_btn" type="Button" parent="Control/Panel/VBoxContainer/button_group"]
+layout_mode = 2
+text = "Destroy"
+
+[connection signal="popup_hide" from="." to="." method="_on_popup_hide"]
+[connection signal="pressed" from="Control/Panel/VBoxContainer/button_group/destroy_btn" to="." method="_on_destroy_btn_pressed"]

@@ -1,0 +1,298 @@
+[gd_scene load_steps=15 format=3 uid="uid://bhf2n8i22tgji"]
+
+[ext_resource type="Script" path="res://scr/builder.gd" id="1_inh7q"]
+[ext_resource type="Script" path="res://scr/buildManager.gd" id="2_pbygf"]
+[ext_resource type="Script" path="res://scr/areaManager.gd" id="3_5kjss"]
+[ext_resource type="Script" path="res://scr/Player/furnitureManager.gd" id="3_lhy6n"]
+[ext_resource type="Script" path="res://scr/controlManager.gd" id="4_cgkc8"]
+[ext_resource type="Script" path="res://scr/Player/uiManager.gd" id="5_dpyu5"]
+[ext_resource type="Script" path="res://scr/Player/buildingUiManager.gd" id="6_22o4u"]
+[ext_resource type="Script" path="res://scr/Player/areasUiManager.gd" id="7_xy7u6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_om74d"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.0196078, 0.690196, 0.0666667, 0.643137)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wjyua"]
+material = SubResource("StandardMaterial3D_om74d")
+size = Vector3(0.5, 1, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5hym0"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0, 0.745098, 0.0117647, 0.545098)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4sg5x"]
+material = SubResource("StandardMaterial3D_5hym0")
+size = Vector3(0.5, 0.1, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bfor1"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3nmro"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="builder" type="CharacterBody3D"]
+script = ExtResource("1_inh7q")
+
+[node name="buildManager" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_pbygf")
+
+[node name="furnitureManager" type="Node" parent="buildManager"]
+script = ExtResource("3_lhy6n")
+
+[node name="areaManager" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("3_5kjss")
+
+[node name="controlManager" type="Node" parent="."]
+script = ExtResource("4_cgkc8")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965926, 0, -0.965926, 0.258819, 0, 0, 0)
+collision_mask = 0
+spring_length = 6.0
+
+[node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
+
+[node name="cursor" type="Node3D" parent="."]
+
+[node name="buildingCursor" type="MeshInstance3D" parent="cursor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+visible = false
+mesh = SubResource("BoxMesh_wjyua")
+
+[node name="areaCursor" type="MeshInstance3D" parent="cursor"]
+visible = false
+mesh = SubResource("BoxMesh_4sg5x")
+
+[node name="furniture" type="MeshInstance3D" parent="cursor"]
+visible = false
+mesh = SubResource("BoxMesh_bfor1")
+
+[node name="Area3D" type="Area3D" parent="cursor/furniture"]
+collision_layer = 16
+collision_mask = 16
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="cursor/furniture/Area3D"]
+shape = SubResource("BoxShape3D_3nmro")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("5_dpyu5")
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="top_info_bar" type="Panel" parent="CanvasLayer/Control"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = -16.0
+offset_right = 10.0
+offset_bottom = 32.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/top_info_bar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_right = -32.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="left_side" type="HBoxContainer" parent="CanvasLayer/Control/top_info_bar/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="money_lbl" type="Label" parent="CanvasLayer/Control/top_info_bar/HBoxContainer/left_side"]
+layout_mode = 2
+text = "Money: 205501$"
+
+[node name="right_side" type="HBoxContainer" parent="CanvasLayer/Control/top_info_bar/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 64
+
+[node name="anomaly_lbl" type="Label" parent="CanvasLayer/Control/top_info_bar/HBoxContainer/right_side"]
+layout_mode = 2
+text = "Anomaly Level: 0"
+
+[node name="personel_lbl" type="Label" parent="CanvasLayer/Control/top_info_bar/HBoxContainer/right_side"]
+layout_mode = 2
+text = "Personel: 0"
+
+[node name="main_button_group" type="HBoxContainer" parent="CanvasLayer/Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = -92.0
+offset_right = 424.0
+offset_bottom = -28.0
+grow_vertical = 0
+
+[node name="build_btn" type="Button" parent="CanvasLayer/Control/main_button_group"]
+custom_minimum_size = Vector2(128, 32)
+layout_mode = 2
+text = "Build"
+
+[node name="area_btn" type="Button" parent="CanvasLayer/Control/main_button_group"]
+custom_minimum_size = Vector2(128, 32)
+layout_mode = 2
+text = "Area"
+
+[node name="control_btn" type="Button" parent="CanvasLayer/Control/main_button_group"]
+custom_minimum_size = Vector2(128, 32)
+layout_mode = 2
+text = "Control"
+
+[node name="build_menu" type="HBoxContainer" parent="CanvasLayer/Control"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = -320.0
+offset_right = 576.0
+offset_bottom = -28.0
+grow_vertical = 0
+script = ExtResource("6_22o4u")
+
+[node name="button_group" type="VBoxContainer" parent="CanvasLayer/Control/build_menu"]
+layout_mode = 2
+alignment = 2
+
+[node name="walls_btn" type="Button" parent="CanvasLayer/Control/build_menu/button_group"]
+custom_minimum_size = Vector2(96, 64)
+layout_mode = 2
+tooltip_text = "Pick from walls to place"
+text = "Walls"
+
+[node name="floor_btn" type="Button" parent="CanvasLayer/Control/build_menu/button_group"]
+custom_minimum_size = Vector2(96, 64)
+layout_mode = 2
+tooltip_text = "Place Floors"
+text = "Floor"
+
+[node name="furniture_btn" type="Button" parent="CanvasLayer/Control/build_menu/button_group"]
+custom_minimum_size = Vector2(96, 64)
+layout_mode = 2
+tooltip_text = "Place Furniture"
+text = "Furniture"
+
+[node name="build_btn" type="Button" parent="CanvasLayer/Control/build_menu/button_group"]
+custom_minimum_size = Vector2(96, 64)
+layout_mode = 2
+tooltip_text = "Finish building or close"
+text = "Build"
+
+[node name="wall_items_group" type="TabContainer" parent="CanvasLayer/Control/build_menu"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 14
+tab_alignment = 1
+
+[node name="Walls" type="GridContainer" parent="CanvasLayer/Control/build_menu/wall_items_group"]
+layout_mode = 2
+columns = 3
+
+[node name="floor_items_group" type="TabContainer" parent="CanvasLayer/Control/build_menu"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 14
+tab_alignment = 1
+
+[node name="Floors" type="GridContainer" parent="CanvasLayer/Control/build_menu/floor_items_group"]
+layout_mode = 2
+columns = 3
+
+[node name="furniture_items_group" type="TabContainer" parent="CanvasLayer/Control/build_menu"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 14
+tab_alignment = 1
+
+[node name="All" type="GridContainer" parent="CanvasLayer/Control/build_menu/furniture_items_group"]
+layout_mode = 2
+columns = 5
+
+[node name="Corridors" type="GridContainer" parent="CanvasLayer/Control/build_menu/furniture_items_group"]
+visible = false
+layout_mode = 2
+columns = 5
+
+[node name="Rooms" type="GridContainer" parent="CanvasLayer/Control/build_menu/furniture_items_group"]
+visible = false
+layout_mode = 2
+columns = 5
+
+[node name="Needs" type="GridContainer" parent="CanvasLayer/Control/build_menu/furniture_items_group"]
+visible = false
+layout_mode = 2
+columns = 5
+
+[node name="Security" type="GridContainer" parent="CanvasLayer/Control/build_menu/furniture_items_group"]
+visible = false
+layout_mode = 2
+columns = 5
+
+[node name="Decoration" type="GridContainer" parent="CanvasLayer/Control/build_menu/furniture_items_group"]
+visible = false
+layout_mode = 2
+columns = 5
+
+[node name="area_menu" type="VBoxContainer" parent="CanvasLayer/Control"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = -384.0
+offset_right = 512.0
+offset_bottom = -28.0
+grow_vertical = 0
+script = ExtResource("7_xy7u6")
+
+[node name="area_panel" type="Panel" parent="CanvasLayer/Control/area_menu"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="areas_group" type="GridContainer" parent="CanvasLayer/Control/area_menu/area_panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="button_group" type="VBoxContainer" parent="CanvasLayer/Control/area_menu"]
+layout_mode = 2
+size_flags_horizontal = 0
+alignment = 2
+
+[node name="close_btn" type="Button" parent="CanvasLayer/Control/area_menu/button_group"]
+custom_minimum_size = Vector2(96, 64)
+layout_mode = 2
+text = "Close"
