@@ -3,9 +3,6 @@ extends Popup
 var area: Area3D = null
 var requirement_fullfilled = false
 
-func _ready() -> void:
-	popup()
-
 func update_data(new_data: AreaData) -> void:
 	$Control/Panel/VBoxContainer/area_name.text = new_data.name
 	$Control/Panel/VBoxContainer/description.text = new_data.description
@@ -22,9 +19,6 @@ func fill_requirements_list(list: Array) -> void:
 func clear_requirements_list() -> void:
 	for child in $Control/Panel/VBoxContainer/requirements.get_children():
 		child.queue_free()
-
-func _on_popup_hide() -> void:
-	queue_free()
 
 func _on_destroy_btn_pressed() -> void:
 	area.queue_free()

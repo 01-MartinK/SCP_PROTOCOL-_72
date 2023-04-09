@@ -36,6 +36,8 @@ shadow_mesh = SubResource("ArrayMesh_wfb15")
 size = Vector3(0.358353, 0.419239, 0.255718)
 
 [node name="sink_old" type="StaticBody3D"]
+collision_layer = 17
+collision_mask = 17
 
 [node name="sink_old_rusty" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, -0.000472978, 0.00280869, 0.00165936)

@@ -1,6 +1,7 @@
 extends Node
 
 @onready var cursor: Node3D = $'../../cursor'
+@onready var furniture_checker: Area3D = cursor.get_node("furniture_collider")
 
 var grid_size: Vector2 = Vector2(0.5, 1)
 var rotated_grid: Vector2 = grid_size
@@ -30,12 +31,18 @@ func _process(_delta: float) -> void:
 	rotated_grid = grid_size.rotated(deg_to_rad(rotation_amount))
 	cursor.get_node("furniture").rotation.y = deg_to_rad(rotation_amount)
 	
-	if mouse_collision:
+	if mouse_collision && !get_parent().get_parent().check_mouse_ui_click():
 		var grid_pos = Vector3(floor(mouse_collision.position.x/rotated_grid.x)*rotated_grid.x, 0, floor(mouse_collision.position.z/rotated_grid.y)*rotated_grid.y) + Vector3(rotated_grid.x / 2, 0, rotated_grid.y / 2)
 		
-		if Input.is_action_just_pressed("mouse_primary"):
+		if Input.is_action_just_pressed("mouse_primary") && furniture_checker.get_overlapping_bodies().size() == 0:
 			if furniture != null:
 				place_furniture(grid_pos)
+		
+		cursor.get_node("furniture/furniture_outline").visible = ( furniture_checker.get_overlapping_bodies().size() != 0 )
+		
+		if Input.is_action_just_pressed("mouse_secondary"):
+			if furniture_checker.get_overlapping_bodies().size() != 0:
+				furniture_checker.get_overlapping_bodies()[0].queue_free()
 		
 		cursor.global_position = grid_pos
 
@@ -49,3 +56,4 @@ func set_furniture(new_furniture) -> void:
 	furniture = new_furniture
 	grid_size = furniture.grid_size
 	cursor.get_node("furniture").mesh = furniture.mesh
+	cursor.get_node("furniture/furniture_outline").mesh = furniture.mesh

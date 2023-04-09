@@ -52,11 +52,11 @@ func onFurnitureButtonPressed() -> void:
 	get_node("%build_menu").get_node("floor_items_group").hide()
 	get_node("%build_menu").get_node("furniture_items_group").show()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var mouse_collision = get_parent().get_intersection()
 	
 	# check if mouse is colliding floor
-	if mouse_collision:
+	if mouse_collision && !get_parent().check_mouse_ui_click():
 		var grid_pos = Vector3(floor(mouse_collision.position.x/grid)*grid, 0, floor(mouse_collision.position.z/grid)*grid) + offset
 		
 		if placing:
@@ -66,12 +66,10 @@ func _process(delta: float) -> void:
 				
 				# check which direction the cursor is in
 				if distance_towards_x_axis > distance_towards_z_axis:
-					#print(start_pos.distance_to(Vector3(grid_pos.x, 0, start_pos.z)))
 					cursor.global_position = (start_pos + Vector3(grid_pos.x, 0, start_pos.z)) / 2
 					cursor.get_node("buildingCursor").mesh.size = Vector3(distance_towards_x_axis + grid, mesh_size.y, grid)
 					end_pos = Vector3(grid_pos.x, 0, start_pos.z)
 				elif distance_towards_z_axis > distance_towards_x_axis:
-					#print(start_pos.distance_to(Vector3(start_pos.x, 0, grid_pos.z)))
 					cursor.global_position = (start_pos + Vector3(start_pos.x, 0, grid_pos.z)) / 2
 					cursor.get_node("buildingCursor").mesh.size = Vector3(grid, mesh_size.y, distance_towards_z_axis + grid)
 					end_pos = Vector3(start_pos.x, 0, grid_pos.z)

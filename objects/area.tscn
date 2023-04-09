@@ -17,8 +17,8 @@ material = SubResource("StandardMaterial3D_hrhdh")
 resource_local_to_scene = true
 
 [node name="area" type="Area3D"]
-collision_layer = 32
-collision_mask = 32
+collision_layer = 48
+collision_mask = 48
 script = ExtResource("1_0tnlb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

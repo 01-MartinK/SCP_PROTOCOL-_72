@@ -6,7 +6,7 @@ var state : STATES = STATES.ACTION
 @onready var grid_map: GridMap = get_parent().get_node("GridMap")
 @onready var floor_grid_map: GridMap = get_parent().get_node("floor_gridMap")
 
-@onready var _spring_arm: SpringArm3D = $SpringArm3D
+#@onready var _spring_arm: SpringArm3D = $SpringArm3D
 @onready var cam: Camera3D = $SpringArm3D/Camera3D
 
 @onready var build_manager: Node = $buildManager
@@ -15,18 +15,18 @@ var state : STATES = STATES.ACTION
 
 @onready var cursor: Node3D = $cursor
 
+@onready var ui: CanvasLayer = $CanvasLayer
+
 var move_speed = 8
 
 var selected = null
-
-var menu = null
 
 func _ready() -> void:
 	build_manager.active = false
 	area_manager.active = false
 	control_manager.active = false
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	
 	checkMovement()
 	
@@ -38,41 +38,31 @@ func _process(delta: float) -> void:
 				select_object(mouse_collision.collider)
 			elif selected != null:
 				unselect_object()
-		if Input.is_action_just_pressed("mouse_secondary"):
-			var mouse_collision_second = get_intersection()
-			if mouse_collision_second:
-				if selected != null && selected.is_in_group("personal"):
-					#selected.set_target_position(mouse_collision_second.position)
-					if menu != null:
-						menu.queue_free()
-					
-					menu = PopupMenu.new()
-					menu.add_item("Work")
-					menu.add_item("Move")
-					menu.add_item("Cancel")
-					menu.position = get_viewport().get_mouse_position()
-					menu.popup_hide.connect(Callable(func(): menu.queue_free()))
-					menu.index_pressed.connect(Callable(self, "menu_item_pressed"))
-					add_child(menu)
-					menu.popup()
 
 # select the object that is clicked
 func select_object(selected_object) -> void:
+	# check if selected object is in the personal group
 	if selected_object.is_in_group("personal"):
+		# check if object is selected or not
 		if selected != null or selected == selected_object:
 			selected.get_node("selector_mesh").hide()
+			ui.get_node("personalProfile").hide()
 			selected = null
 		else:
 			selected = selected_object
 			selected.get_node("selector_mesh").show()
-	
-	if selected_object.is_in_group("has_popup"):
-		selected_object.show_popup()
+			ui.get_node("personalProfile").popup()
+			ui.get_node("personalProfile").position = Vector2(916,220)
+	elif selected_object is Area3D: # if selected object is an area
+		ui.get_node("area_popup").update_data(selected_object.data)
+		ui.get_node("area_popup").position = get_viewport().get_mouse_position()
+		ui.get_node("area_popup").popup()
 
 # unselect that object that was clicked
 func unselect_object() -> void:
 	if selected.has_node("selector_mesh"):
 		selected.get_node("selector_mesh").hide()
+	
 	selected = null
 
 # check for camera movement
@@ -142,12 +132,6 @@ func get_intersection_with_collision_layer(mask_int: int) -> Dictionary:
 	
 	return intersection
 
-func check_ui_collision() -> bool:
-	var mouse_pos = get_viewport().get_mouse_position()
-	var ui_component_rects : Array[Rect2]= []
-	
-	return false
-
-# menu item pressed
-func menu_item_pressed(index: int) -> void:
-	print(index)
+# check if mouse is on ui
+func check_mouse_ui_click() -> bool:
+	return get_node("CanvasLayer").check_if_mouse_ui()

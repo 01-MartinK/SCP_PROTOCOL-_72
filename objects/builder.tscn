@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bhf2n8i22tgji"]
+[gd_scene load_steps=19 format=3 uid="uid://bhf2n8i22tgji"]
 
 [ext_resource type="Script" path="res://scr/builder.gd" id="1_inh7q"]
 [ext_resource type="Script" path="res://scr/buildManager.gd" id="2_pbygf"]
@@ -8,6 +8,8 @@
 [ext_resource type="Script" path="res://scr/Player/uiManager.gd" id="5_dpyu5"]
 [ext_resource type="Script" path="res://scr/Player/buildingUiManager.gd" id="6_22o4u"]
 [ext_resource type="Script" path="res://scr/Player/areasUiManager.gd" id="7_xy7u6"]
+[ext_resource type="PackedScene" uid="uid://c65qegihb2rqj" path="res://objects/UI/personal_profile.tscn" id="9_rbyj7"]
+[ext_resource type="PackedScene" uid="uid://dlaojj1yne6vf" path="res://objects/UI/area_popup.tscn" id="10_ux0tq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_om74d"]
 transparency = 1
@@ -29,7 +31,15 @@ size = Vector3(0.5, 0.1, 0.5)
 
 [sub_resource type="BoxMesh" id="BoxMesh_bfor1"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wrljy"]
+shading_mode = 0
+albedo_color = Color(1, 0.333333, 0.321569, 1)
+grow_amount = 0.02
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_3nmro"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8yvdh"]
 size = Vector3(0.5, 0.5, 0.5)
 
 [node name="builder" type="CharacterBody3D"]
@@ -68,8 +78,13 @@ visible = false
 mesh = SubResource("BoxMesh_4sg5x")
 
 [node name="furniture" type="MeshInstance3D" parent="cursor"]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 0, 0)
 visible = false
 mesh = SubResource("BoxMesh_bfor1")
+
+[node name="furniture_outline" type="MeshInstance3D" parent="cursor/furniture"]
+transform = Transform3D(1.05, 0, 0, 0, 1.05, 0, 0, 0, 1.05, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_wrljy")
 
 [node name="Area3D" type="Area3D" parent="cursor/furniture"]
 collision_layer = 16
@@ -77,6 +92,13 @@ collision_mask = 16
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="cursor/furniture/Area3D"]
 shape = SubResource("BoxShape3D_3nmro")
+
+[node name="furniture_collider" type="Area3D" parent="cursor"]
+collision_layer = 16
+collision_mask = 16
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="cursor/furniture_collider"]
+shape = SubResource("BoxShape3D_8yvdh")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 script = ExtResource("5_dpyu5")
@@ -296,3 +318,9 @@ alignment = 2
 custom_minimum_size = Vector2(96, 64)
 layout_mode = 2
 text = "Close"
+
+[node name="personalProfile" parent="CanvasLayer" instance=ExtResource("9_rbyj7")]
+visible = false
+
+[node name="area_popup" parent="CanvasLayer" instance=ExtResource("10_ux0tq")]
+visible = false

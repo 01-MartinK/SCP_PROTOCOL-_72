@@ -1,7 +1,5 @@
 extends Area3D
 
-@onready var info_popup: PackedScene = preload("res://objects/UI/area_popup.tscn")
-
 var data: AreaData
 var has_all_requirements_filled: bool = false
 
@@ -25,14 +23,3 @@ func set_size(x_scale: float, y_scale: float) -> void:
 
 func check_requirements() -> void:
 	pass
-
-func show_popup() -> void:
-	if has_node("area_popup"):
-		get_node("area_popup").queue_free()
-	
-	var popup : Popup = info_popup.instantiate()
-	popup.area = self
-	popup.requirement_fullfilled = false
-	popup.position = get_viewport().get_mouse_position()
-	popup.update_data(data)
-	add_child(popup)

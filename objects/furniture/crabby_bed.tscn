@@ -43,6 +43,8 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_hdy0k")
 
 [node name="crabby_bed" type="StaticBody3D"]
+collision_layer = 17
+collision_mask = 17
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.185089, 0)

@@ -77,5 +77,4 @@ alignment = 1
 layout_mode = 2
 text = "Destroy"
 
-[connection signal="popup_hide" from="." to="." method="_on_popup_hide"]
 [connection signal="pressed" from="Control/Panel/VBoxContainer/button_group/destroy_btn" to="." method="_on_destroy_btn_pressed"]

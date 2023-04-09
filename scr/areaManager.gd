@@ -22,11 +22,11 @@ var area_data: AreaData = load("res://assets/resources/areas/d_class_cell.tres")
 func _ready() -> void:
 	set_process(active)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var mouse_collision: Dictionary = get_parent().get_intersection()
 	
 	# if there is an intersection at the scene
-	if mouse_collision:
+	if mouse_collision && !get_parent().check_mouse_ui_click():
 		var grid_pos = Vector3(floor(mouse_collision.position.x/grid)*grid, 0, floor(mouse_collision.position.z/grid)*grid) + offset
 		
 		if placing:

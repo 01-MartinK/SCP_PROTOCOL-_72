@@ -39,3 +39,11 @@ func showMenu(i: int) -> void:
 		get_node('%main_button_group').hide()
 		get_node('%build_menu').hide()
 		get_node('%area_menu').show()
+
+func check_if_mouse_ui() -> bool:
+	for child in get_node("Control").get_children():
+		if !(child is Popup):
+			if child.get_rect().has_point(get_viewport().get_mouse_position()):
+				return true
+	
+	return false
